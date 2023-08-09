@@ -59,6 +59,7 @@ def add():
             file.write(display.toPlainText())
         file_list.addItem((filename.text() + '.txt'))
         files.append((filename.text() + '.txt'))
+        filename.clear()
     except:
         pass
 
