@@ -1,5 +1,7 @@
 from PyQt6.QtWidgets import QApplication, QListWidget, QTextEdit, QPushButton, QVBoxLayout, QWidget, QHBoxLayout, QFileDialog, QLineEdit
 from os import listdir, path, remove
+from PyQt6.QtGui import QFont
+from PyQt6.QtCore import QTimer
 
 def loadfolder():
     global workdir
@@ -63,11 +65,19 @@ def add():
     except:
         pass
 
+def refresh():
+    try:
+        display.setFont(QFont('Arial', int(fontsizeinput.text())))
+    except:
+        pass
+
 app = QApplication([])
 w = QWidget()
 w.setWindowTitle("Text editor")
 w.resize(700, 500)
+fontsizenum = 12
 display = QTextEdit()
+display.setFont(QFont('Arial', 15))
 pb1 = QPushButton("load folder")
 pb2 = QPushButton("delete")
 pb3 = QPushButton("save")
@@ -75,6 +85,9 @@ pb4 = QPushButton('add')
 file_list = QListWidget()
 filename = QLineEdit()
 filename.setPlaceholderText('enter file name:')
+fontsizeinput = QLineEdit()
+fontsizeinput.setPlaceholderText('enter font size:')
+timer = QTimer()
 l1 = QHBoxLayout()
 l2 = QVBoxLayout()
 l3 = QVBoxLayout()
@@ -84,6 +97,7 @@ l1.addWidget(pb2)
 l1.addWidget(pb3)
 l1.addWidget(pb4)
 l1.addWidget(filename)
+l1.addWidget(fontsizeinput)
 l2.addLayout(l1)
 l3.addWidget(file_list)
 l4.addWidget(display)
@@ -96,4 +110,6 @@ pb2.clicked.connect(delete)
 pb3.clicked.connect(save)
 pb4.clicked.connect(add)
 file_list.currentRowChanged.connect(loadfile)
+timer.timeout.connect(refresh)
+timer.start(1000)
 app.exec()
