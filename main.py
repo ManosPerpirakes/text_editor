@@ -29,7 +29,7 @@ def loadfile():
         with open(filepath, 'r') as file:
             display.setText(str(file.read()))
     except:
-        pass
+        print("could not read file")
 
 def delete():
     global workdir
